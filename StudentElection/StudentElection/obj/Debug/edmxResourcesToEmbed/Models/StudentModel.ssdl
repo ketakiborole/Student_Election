@@ -8,20 +8,48 @@
     <Property Name="userid" Type="varchar" MaxLength="40" />
     <Property Name="password" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="Categeory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Start_Date" Type="datetime" />
+    <Property Name="End_Date" Type="datetime" />
+  </EntityType>
   <EntityType Name="Student">
     <Key>
       <PropertyRef Name="rollno" />
     </Key>
     <Property Name="rollno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="studentname" Type="varchar" MaxLength="30" />
-    <Property Name="DOB" Type="date" />
     <Property Name="branch" Type="varchar" MaxLength="30" />
-    <Property Name="yearofjoining" Type="date" />
     <Property Name="mobilenumber" Type="int" />
-    <Property Name="password" Type="int" />
+    <Property Name="yearofjoining" Type="int" />
+    <Property Name="password" Type="date" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="logincount" Type="int" />
+    <Property Name="Id" Type="int" />
   </EntityType>
+  <Association Name="FK__Student__Id__37A5467C">
+    <End Role="Categeory" Type="Self.Categeory" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categeory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="Student_ElectionModelStoreContainer">
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categeory" EntityType="Self.Categeory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Student__Id__37A5467C" Association="Self.FK__Student__Id__37A5467C">
+      <End Role="Categeory" EntitySet="Categeory" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>

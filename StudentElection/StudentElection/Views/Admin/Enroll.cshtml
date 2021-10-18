@@ -1,0 +1,95 @@
+﻿@model StudentElection.Models.Student
+
+@{
+    ViewBag.Title = "Enroll";
+}
+<head>
+    
+    @Styles.Render("~/Content/css")
+   
+</head>
+<body class="body-content content-center">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <h4 style="color:white">Online Student Election System</h4>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Register Students", "Upload", "Admin")</li>
+                    <li>@Html.ActionLink("Enroll Candidates", "Enroll", "Admin")</li>
+                    <li>@Html.ActionLink("Launch Election", "Student", "Home")</li>
+                    <li>@Html.ActionLink("Analyse Votes", "Student", "Home")</li>
+                    <li>@Html.ActionLink("LogOut", "LogOut", "Admin")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <h2>Enroll Candidate</h2>
+    <hr />
+    @using (Html.BeginForm("Enroll", "Admin", FormMethod.Get))
+    {
+        @Html.TextBoxFor(m => m.rollno)
+
+        <div>
+            <input type="submit" value="Search" />
+        </div>
+    }
+    @if (Model != null && Model.studentname != null)
+    {
+
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.studentname)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.studentname)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.branch)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.branch)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.mobilenumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mobilenumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DOB)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DOB)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.yearofjoining)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.yearofjoining)
+            </dd>
+        </dl>
+    }
+
+</body>
+
+
+
+
+
+@*<p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.rollno }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

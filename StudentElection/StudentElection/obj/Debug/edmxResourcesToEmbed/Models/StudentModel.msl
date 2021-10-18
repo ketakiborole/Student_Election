@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="Student_ElectionModelStoreContainer" CdmEntityContainer="Student_ElectionDBEntities">
+  <EntityContainerMapping StorageEntityContainer="Student_ElectionModelStoreContainer" CdmEntityContainer="Student_ElectionEntities">
     <EntitySetMapping Name="Admins">
       <EntityTypeMapping TypeName="Student_ElectionModel.Admin">
         <MappingFragment StoreEntitySet="Admin">
@@ -10,16 +10,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Categeories">
+      <EntityTypeMapping TypeName="Student_ElectionModel.Categeory">
+        <MappingFragment StoreEntitySet="Categeory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
+          <ScalarProperty Name="End_Date" ColumnName="End_Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Students">
       <EntityTypeMapping TypeName="Student_ElectionModel.Student">
         <MappingFragment StoreEntitySet="Student">
           <ScalarProperty Name="rollno" ColumnName="rollno" />
           <ScalarProperty Name="studentname" ColumnName="studentname" />
-          <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="branch" ColumnName="branch" />
-          <ScalarProperty Name="yearofjoining" ColumnName="yearofjoining" />
           <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
+          <ScalarProperty Name="yearofjoining" ColumnName="yearofjoining" />
           <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="logincount" ColumnName="logincount" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

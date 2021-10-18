@@ -16,10 +16,14 @@ namespace StudentElection.Models
     {
         public int rollno { get; set; }
         public string studentname { get; set; }
-        public Nullable<System.DateTime> DOB { get; set; }
         public string branch { get; set; }
-        public Nullable<System.DateTime> yearofjoining { get; set; }
         public Nullable<int> mobilenumber { get; set; }
-        public Nullable<int> password { get; set; }
+        public Nullable<int> yearofjoining { get; set; }
+        public Nullable<System.DateTime> password { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public Nullable<int> logincount { get; set; }
+        public Nullable<int> Id { get; set; }
+    
+        public virtual Categeory Categeory { get; set; }
     }
 }

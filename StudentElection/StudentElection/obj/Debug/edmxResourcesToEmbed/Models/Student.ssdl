@@ -14,11 +14,11 @@
     </Key>
     <Property Name="rollno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="studentname" Type="varchar" MaxLength="30" />
-    <Property Name="DOB" Type="date" />
     <Property Name="branch" Type="varchar" MaxLength="30" />
-    <Property Name="yearofjoining" Type="date" />
     <Property Name="mobilenumber" Type="int" />
-    <Property Name="password" Type="int" />
+    <Property Name="yearofjoining" Type="int" />
+    <Property Name="password" Type="date" />
+    <Property Name="DOB" Type="date" />
   </EntityType>
   <EntityContainer Name="Student_ElectionModelStoreContainer">
     <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />

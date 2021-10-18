@@ -10,12 +10,19 @@ using System.Web.Mvc;
 using ExcelDataReader;
 using OfficeOpenXml;
 using StudentElection.Models;
+using System.Data.Entity.Validation;
+using System.Data.OleDb;
+using System.IO;
+using System.Text.RegularExpressions;
+using LinqToExcel;
+using System.Data.SqlClient;
 
 namespace StudentElection.Controllers
 {
     public class AdminController : Controller
     {
-        private Student_ElectionDBEntities db = new Student_ElectionDBEntities();
+        private Student_ElectionEntities db = new Student_ElectionEntities();
+        private IQueryable<Student> artistAlbums;
 
         // GET: Admin
         public AdminController()
@@ -121,7 +128,7 @@ namespace StudentElection.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        //for creating login page
         public ActionResult Login()
         {
             return View();
@@ -133,7 +140,7 @@ namespace StudentElection.Controllers
         {
             if (ModelState.IsValid)
             {
-                using(Student_ElectionDBEntities db =new Student_ElectionDBEntities())
+                using(Student_ElectionEntities db =new Student_ElectionEntities())
                 {
                     var obj = db.Admins.Where(a => a.userid.Equals(objadmin.userid) && a.password.Equals(objadmin.password)).FirstOrDefault();
                     if(obj != null)
@@ -142,16 +149,19 @@ namespace StudentElection.Controllers
                         Session["password"] = obj.password.ToString();
                         return RedirectToAction("AdminHomePage");
                     }
+                    
                    
                    
                 }
                 
             }
+            ModelState.AddModelError("", "Invalid Username and Password");
             return View(objadmin);
             
             
+            
         }
-
+        //for admin home page
         public ActionResult AdminHomePage()
         {
             if (Session["userid"] != null)
@@ -163,14 +173,145 @@ namespace StudentElection.Controllers
                 return RedirectToAction("Login");
             }
         }
-
+        //for logout
         public ActionResult LogOut()
         {
+            TempData["SuccessMessage"] = "Your Success Message";
+
             return RedirectToAction("Login");
         }
+        //for uploading excel
+        public ActionResult Upload()
+        {
+            return View();
+        }
+        //for uploading resister student
+        [HttpPost]
+        public JsonResult UploadExcel(Student students, HttpPostedFileBase FileUpload)
+        {
 
-       
-            
+            List<string> data = new List<string>();
+            if (FileUpload != null)
+            {
+                // tdata.ExecuteCommand("truncate table OtherCompanyAssets");
+                if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                {
+                    string filename = FileUpload.FileName;
+                    string targetpath = Server.MapPath("~/Doc/");
+                    FileUpload.SaveAs(targetpath + filename);
+                    string pathToExcelFile = targetpath + filename;
+                    var connectionString = "";
+                    if (filename.EndsWith(".xls"))
+                    {
+                        connectionString = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; data source={0}; Extended Properties=Excel 8.0;", pathToExcelFile);
+                    }
+                    else if (filename.EndsWith(".xlsx"))
+                    {
+                        connectionString = string.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"Excel 12.0 Xml;HDR=YES;IMEX=1\";", pathToExcelFile);
+                    }
+
+                    var adapter = new OleDbDataAdapter("SELECT * FROM [Sheet1$]", connectionString);
+                    var ds = new DataSet();
+                    adapter.Fill(ds, "ExcelTable");
+                    DataTable dtable = ds.Tables["ExcelTable"];
+                    string sheetName = "Sheet1";
+                    var excelFile = new ExcelQueryFactory(pathToExcelFile);
+                    artistAlbums = from a in excelFile.Worksheet<Student>(sheetName) select a;
+                    foreach (var a in artistAlbums)
+                    {
+                        try
+                        {
+                            if (a.studentname != ""  && a.branch != "")
+                            {
+                                Student stu = new Student();
+                                stu.studentname = a.studentname;
+                                stu.branch = a.branch;
+                                stu.mobilenumber = a.mobilenumber;
+                                stu.yearofjoining = a.yearofjoining;
+                                stu.password = a.password;
+                                stu.DOB = a.DOB;
+
+                                // 
+
+                               
+                                db.Students.Add(stu);
+                                db.SaveChanges();
+                                //TU.Name = a.Name;
+                                //TU.Address = a.Address;
+                                //TU.ContactNo = a.ContactNo;
+                                //db.Users.Add(TU);
+                                //db.SaveChanges();
+                            }
+                            else
+                            {
+                                data.Add("<ul>");
+                                if (a.studentname == "" || a.studentname == null) data.Add("<li> name is required</li>");
+                                // if (a.mobilenumber == "" || a.mobilenumber == null) data.Add("<li> Address is required</li>");
+                                if (a.branch == "" || a.branch == null) data.Add("<li>ContactNo is required</li>");
+                                data.Add("</ul>");
+                                data.ToArray();
+                                return Json(data, JsonRequestBehavior.AllowGet);
+                            }
+                        }
+                        catch (DbEntityValidationException ex)
+                        {
+                            foreach (var entityValidationErrors in ex.EntityValidationErrors)
+                            {
+                                foreach (var validationError in entityValidationErrors.ValidationErrors)
+                                {
+                                    Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                                }
+                            }
+                        }
+                    }
+                    //deleting excel file from folder
+                    if ((System.IO.File.Exists(pathToExcelFile)))
+                    {
+                        System.IO.File.Delete(pathToExcelFile);
+                    }
+                    return Json("success", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    //alert message for invalid file format
+                    data.Add("<ul>");
+                    data.Add("<li>Only Excel file format is allowed</li>");
+                    data.Add("</ul>");
+                    data.ToArray();
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                data.Add("<ul>");
+                if (FileUpload == null) data.Add("<li>Please choose Excel file</li>");
+                data.Add("</ul>");
+                data.ToArray();
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult Enroll(int? rollno)
+        {
+            var details = db.Students.Find(rollno);
+            return View(details);
+            //return View();
+        }
+        //for enroll candidate page
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //public ActionResult Enroll(int? rollno)
+        //{
+        //    using (Student_ElectionEntities1 db = new Student_ElectionEntities1())
+        //    {
+        //       // Student student = db.Students.Find(rollno);
+        //        //int rollno = 2;
+        //        var details = db.Students.Find(rollno);
+        //        return View("secucess");
+        //    }
+        //}
+        //dropdown list
+      
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

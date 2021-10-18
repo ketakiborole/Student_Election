@@ -13,21 +13,49 @@
           <Property Name="userid" Type="varchar" MaxLength="40" />
           <Property Name="password" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Categeory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Start_Date" Type="datetime" />
+          <Property Name="End_Date" Type="datetime" />
+        </EntityType>
         <EntityType Name="Student">
           <Key>
             <PropertyRef Name="rollno" />
           </Key>
           <Property Name="rollno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="studentname" Type="varchar" MaxLength="30" />
-          <Property Name="DOB" Type="date" />
           <Property Name="branch" Type="varchar" MaxLength="30" />
-          <Property Name="yearofjoining" Type="date" />
           <Property Name="mobilenumber" Type="int" />
-          <Property Name="password" Type="int" />
+          <Property Name="yearofjoining" Type="int" />
+          <Property Name="password" Type="date" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="logincount" Type="int" />
+          <Property Name="Id" Type="int" />
         </EntityType>
+        <Association Name="FK__Student__Id__37A5467C">
+          <End Role="Categeory" Type="Self.Categeory" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categeory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Student_ElectionModelStoreContainer">
           <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categeory" EntityType="Self.Categeory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Student__Id__37A5467C" Association="Self.FK__Student__Id__37A5467C">
+            <End Role="Categeory" EntitySet="Categeory" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -42,28 +70,58 @@
           <Property Name="userid" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Categeory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Start_Date" Type="DateTime" Precision="3" />
+          <Property Name="End_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Student__Id__37A5467C" FromRole="Categeory" ToRole="Student" />
+        </EntityType>
         <EntityType Name="Student">
           <Key>
             <PropertyRef Name="rollno" />
           </Key>
           <Property Name="rollno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="studentname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="DOB" Type="DateTime" Precision="0" />
           <Property Name="branch" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="yearofjoining" Type="DateTime" Precision="0" />
           <Property Name="mobilenumber" Type="Int32" />
-          <Property Name="password" Type="Int32" />
+          <Property Name="yearofjoining" Type="Int32" />
+          <Property Name="password" Type="DateTime" Precision="0" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="logincount" Type="Int32" />
+          <Property Name="Id" Type="Int32" />
+          <NavigationProperty Name="Categeory" Relationship="Self.FK__Student__Id__37A5467C" FromRole="Student" ToRole="Categeory" />
         </EntityType>
-        <EntityContainer Name="Student_ElectionDBEntities" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK__Student__Id__37A5467C">
+          <End Role="Categeory" Type="Self.Categeory" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categeory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Student_ElectionEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Categeories" EntityType="Self.Categeory" />
           <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="FK__Student__Id__37A5467C" Association="Self.FK__Student__Id__37A5467C">
+            <End Role="Categeory" EntitySet="Categeories" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Student_ElectionModelStoreContainer" CdmEntityContainer="Student_ElectionDBEntities">
+        <EntityContainerMapping StorageEntityContainer="Student_ElectionModelStoreContainer" CdmEntityContainer="Student_ElectionEntities">
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="Student_ElectionModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
@@ -73,16 +131,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Categeories">
+            <EntityTypeMapping TypeName="Student_ElectionModel.Categeory">
+              <MappingFragment StoreEntitySet="Categeory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Start_Date" ColumnName="Start_Date" />
+                <ScalarProperty Name="End_Date" ColumnName="End_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="Student_ElectionModel.Student">
               <MappingFragment StoreEntitySet="Student">
                 <ScalarProperty Name="rollno" ColumnName="rollno" />
                 <ScalarProperty Name="studentname" ColumnName="studentname" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="branch" ColumnName="branch" />
-                <ScalarProperty Name="yearofjoining" ColumnName="yearofjoining" />
                 <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
+                <ScalarProperty Name="yearofjoining" ColumnName="yearofjoining" />
                 <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="logincount" ColumnName="logincount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

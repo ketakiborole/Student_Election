@@ -12,7 +12,7 @@ namespace StudentElection.Controllers
 {
     public class StudentController : Controller
     {
-        private Student_ElectionDBEntities db = new Student_ElectionDBEntities();
+        private Student_ElectionEntities db = new Student_ElectionEntities();
 
         // GET: Student
         public ActionResult Index()

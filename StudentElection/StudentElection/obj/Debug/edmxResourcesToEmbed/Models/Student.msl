@@ -15,11 +15,11 @@
         <MappingFragment StoreEntitySet="Student">
           <ScalarProperty Name="rollno" ColumnName="rollno" />
           <ScalarProperty Name="studentname" ColumnName="studentname" />
-          <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="branch" ColumnName="branch" />
-          <ScalarProperty Name="yearofjoining" ColumnName="yearofjoining" />
           <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
+          <ScalarProperty Name="yearofjoining" ColumnName="yearofjoining" />
           <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

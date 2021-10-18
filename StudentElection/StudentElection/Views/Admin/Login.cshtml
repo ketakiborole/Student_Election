@@ -3,46 +3,66 @@
 @{
     ViewBag.Title = "Login";
 }
-
-<h2>Login</h2>
-@using (Html.BeginForm("Login", "Admin", FormMethod.Post))
-{
-    <fieldset>
-       
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true)
-        @if (@ViewBag.Message != null)
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="body-content">
+   
+    <div class="content-center">
+        <h2> Admin Login</h2>
+        @using (Html.BeginForm("Login", "Admin", FormMethod.Post))
         {
-            <div style="border: 1px solid red">
-                @ViewBag.Message
-            </div>
+
+
+
+            <fieldset>
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @if (@ViewBag.Message != null)
+                {
+                    <div style="border: 1px solid red">
+                        @ViewBag.Message
+                    </div>
+                }
+                <table>
+                    <tr>
+                        <td>@Html.LabelFor(a => a.userid)</td>
+                        <td>@Html.TextBoxFor(a => a.userid)</td>
+
+                        <td>@Html.ValidationMessageFor(a => a.userid)</td>
+                        <br />
+                    </tr>
+
+                    <tr>
+                        <td>
+                            @Html.LabelFor(a => a.password)
+                        </td>
+                        <td>
+                            @Html.PasswordFor(a => a.password)
+                        </td>
+                        <td>
+                            @Html.ValidationMessageFor(a => a.password)
+                        </td>
+                    </tr>
+                    <br />
+                    <tr>
+
+                        <td>
+                            <input type="submit" value="Login" class="btn btn-primary"/>
+                        </td>
+                        <td>
+                            <asp:Label runat="server" Text="Label"></asp:Label>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                </table>
+            </fieldset>
+
         }
-        <table>
-            <tr>
-                <td>@Html.LabelFor(a => a.userid)</td>
-                <td>@Html.TextBoxFor(a => a.userid)</td>
-                <td>@Html.ValidationMessageFor(a => a.userid)</td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(a => a.password)
-                </td>
-                <td>
-                    @Html.PasswordFor(a => a.password)
-                </td>
-                <td>
-                    @Html.ValidationMessageFor(a => a.password)
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <input type="submit" value="Login" />
-                </td>
-                <td>
-                    <asp:Label runat="server" Text="Label"></asp:Label>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-}  
+    </div>
+</body>

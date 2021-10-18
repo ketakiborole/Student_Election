@@ -13,10 +13,10 @@ namespace StudentElection.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Student_ElectionDBEntities : DbContext
+    public partial class Student_ElectionEntities : DbContext
     {
-        public Student_ElectionDBEntities()
-            : base("name=Student_ElectionDBEntities")
+        public Student_ElectionEntities()
+            : base("name=Student_ElectionEntities")
         {
         }
     
@@ -26,6 +26,7 @@ namespace StudentElection.Models
         }
     
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<Categeory> Categeories { get; set; }
         public virtual DbSet<Student> Students { get; set; }
     }
 }
