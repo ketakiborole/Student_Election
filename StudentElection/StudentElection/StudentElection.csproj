@@ -159,7 +159,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\CategeoryController.cs" />
     <Compile Include="Controllers\CategoryListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -259,7 +258,6 @@
     <Content Include="Views\Admin\Upload.cshtml" />
     <Content Include="Views\Admin\LogOut.cshtml" />
     <Content Include="Views\Admin\Enroll.cshtml" />
-    <Content Include="Views\Categeory\Index.cshtml" />
     <Content Include="Views\CategoryList\Index.cshtml" />
     <Content Include="Views\StudentList\Index.cshtml" />
   </ItemGroup>

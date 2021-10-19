@@ -293,23 +293,34 @@ namespace StudentElection.Controllers
         }
         public ActionResult Enroll(int? rollno)
         {
+            
+            List<SelectListItem> items = new List<SelectListItem>();
+            items.Add(new SelectListItem { Text = "Class Representative", Value = "Class Representative" });
+            items.Add(new SelectListItem { Text = "Student President", Value = "Student President" });
+            items.Add(new SelectListItem { Text = "Affinity Club", Value = "Affinity Club" });
+            items.Add(new SelectListItem { Text = "Ecofriendly Club", Value = "Ecofriendly Club" });
+            items.Add(new SelectListItem { Text = "Cultural Club", Value = "Cultural Club" });
+            items.Add(new SelectListItem { Text = "Photography Club", Value = "Photography Club" });
+            ViewData["Options"] = items;
             var details = db.Students.Find(rollno);
+            if (rollno!= null && details == null)
+            {
+                ModelState.AddModelError("", "Roll number not found");
+            }
             return View(details);
             //return View();
         }
         //for enroll candidate page
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public ActionResult Enroll(int? rollno)
-        //{
-        //    using (Student_ElectionEntities1 db = new Student_ElectionEntities1())
-        //    {
-        //       // Student student = db.Students.Find(rollno);
-        //        //int rollno = 2;
-        //        var details = db.Students.Find(rollno);
-        //        return View("secucess");
-        //    }
-        //}
+       
+        public ActionResult Enroll(HttpPostedFileBase file)
+        {
+            string path = Server.MapPath("~/file");
+            string fileName = Path.GetFileName(file.FileName);
+            string fullapth = Path.Combine(path, fileName);
+            file.SaveAs(fullapth);
+            return View();
+        }
         //dropdown list
         
         protected override void Dispose(bool disposing)
