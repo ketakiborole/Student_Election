@@ -19,10 +19,10 @@ namespace StudentElection.Models
         public string branch { get; set; }
         public Nullable<int> mobilenumber { get; set; }
         public Nullable<int> yearofjoining { get; set; }
-        public Nullable<System.DateTime> password { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<int> logincount { get; set; }
         public Nullable<int> Id { get; set; }
+        public string password { get; set; }
     
         public virtual Categeory Categeory { get; set; }
     }

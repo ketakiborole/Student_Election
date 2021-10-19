@@ -228,7 +228,8 @@ namespace StudentElection.Controllers
                                 stu.branch = a.branch;
                                 stu.mobilenumber = a.mobilenumber;
                                 stu.yearofjoining = a.yearofjoining;
-                                stu.password = a.password;
+
+                                stu.password = Convert.ToDateTime(a.password).ToShortDateString();
                                 stu.DOB = a.DOB;
 
                                 // 

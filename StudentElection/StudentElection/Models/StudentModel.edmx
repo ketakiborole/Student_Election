@@ -31,10 +31,10 @@
           <Property Name="branch" Type="varchar" MaxLength="30" />
           <Property Name="mobilenumber" Type="int" />
           <Property Name="yearofjoining" Type="int" />
-          <Property Name="password" Type="date" />
           <Property Name="DOB" Type="date" />
           <Property Name="logincount" Type="int" />
           <Property Name="Id" Type="int" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__Student__Id__37A5467C">
           <End Role="Categeory" Type="Self.Categeory" Multiplicity="0..1" />
@@ -89,10 +89,10 @@
           <Property Name="branch" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="mobilenumber" Type="Int32" />
           <Property Name="yearofjoining" Type="Int32" />
-          <Property Name="password" Type="DateTime" Precision="0" />
           <Property Name="DOB" Type="DateTime" Precision="0" />
           <Property Name="logincount" Type="Int32" />
           <Property Name="Id" Type="Int32" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Categeory" Relationship="Self.FK__Student__Id__37A5467C" FromRole="Student" ToRole="Categeory" />
         </EntityType>
         <Association Name="FK__Student__Id__37A5467C">
@@ -149,10 +149,10 @@
                 <ScalarProperty Name="branch" ColumnName="branch" />
                 <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
                 <ScalarProperty Name="yearofjoining" ColumnName="yearofjoining" />
-                <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
                 <ScalarProperty Name="logincount" ColumnName="logincount" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="password" ColumnName="password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

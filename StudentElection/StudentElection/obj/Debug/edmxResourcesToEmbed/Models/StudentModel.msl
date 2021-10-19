@@ -28,10 +28,10 @@
           <ScalarProperty Name="branch" ColumnName="branch" />
           <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
           <ScalarProperty Name="yearofjoining" ColumnName="yearofjoining" />
-          <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="DOB" ColumnName="DOB" />
           <ScalarProperty Name="logincount" ColumnName="logincount" />
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="password" ColumnName="password" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -26,10 +26,10 @@
     <Property Name="branch" Type="varchar" MaxLength="30" />
     <Property Name="mobilenumber" Type="int" />
     <Property Name="yearofjoining" Type="int" />
-    <Property Name="password" Type="date" />
     <Property Name="DOB" Type="date" />
     <Property Name="logincount" Type="int" />
     <Property Name="Id" Type="int" />
+    <Property Name="password" Type="varchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK__Student__Id__37A5467C">
     <End Role="Categeory" Type="Self.Categeory" Multiplicity="0..1" />
