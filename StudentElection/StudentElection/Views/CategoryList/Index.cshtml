@@ -1,0 +1,19 @@
+﻿@model IEnumerable< StudentElection.Models.Categeory>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Categeory List</h2>
+
+<html>
+<body>
+    
+       
+        @foreach (var categeory in Model)
+        {
+            <li>@Html.ActionLink(categeory.Name,"Index","StudentList",new {categeoryid=categeory.Id },null)</li>
+        }
+    
+</body>
+</html>
+
