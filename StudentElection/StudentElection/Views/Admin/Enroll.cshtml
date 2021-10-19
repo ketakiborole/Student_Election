@@ -28,9 +28,11 @@
     </div>
     <h2>Enroll Candidate</h2>
     <hr />
+    <p>@ViewBag.EnrollSucessMessage</p>
     @using (Html.BeginForm("Enroll", "Admin", FormMethod.Get))
     {
-        @Html.TextBoxFor(m => m.rollno)
+    <p>Enter Roll Number</p> 
+    @Html.TextBoxFor(m => m.rollno)
 
         <div>
             <input type="submit" value="Search" class="btn btn-primary" />
@@ -83,17 +85,16 @@
             </dd>
         </dl>
         <div>
-            <br />
-            Select Category to Enroll @Html.DropDownList("Options", ViewData["Options"] as SelectList, "--Select Item--")
-            <br />
-
             <div class="col-lg-12">
                 @using (Html.BeginForm("Enroll", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
+                    <br />
+                    @Html.DropDownList("Options", ViewData["Options"] as SelectList, "--Select Item--");
+                    <br />
                     @Html.TextBox("file", "", new { type = "file" }) <br />
 
                     <input type="submit" value="Enroll" class="btn btn-primary" />
-                }
+        }
             </div>
         </div>
     }

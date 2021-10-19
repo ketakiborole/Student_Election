@@ -23,7 +23,7 @@ namespace StudentElection.Controllers
     {
         private Student_ElectionEntities db = new Student_ElectionEntities();
         private IQueryable<Student> artistAlbums;
-
+        private int CurrentRollNumber;
         // GET: Admin
         public AdminController()
         {
@@ -293,7 +293,7 @@ namespace StudentElection.Controllers
         }
         public ActionResult Enroll(int? rollno)
         {
-            
+            ViewBag.EnrollSucessMessage = "";
             List<SelectListItem> items = new List<SelectListItem>();
             items.Add(new SelectListItem { Text = "Class Representative", Value = "Class Representative" });
             items.Add(new SelectListItem { Text = "Student President", Value = "Student President" });
@@ -303,6 +303,11 @@ namespace StudentElection.Controllers
             items.Add(new SelectListItem { Text = "Photography Club", Value = "Photography Club" });
             ViewData["Options"] = items;
             var details = db.Students.Find(rollno);
+            if(rollno != null)
+            {
+                TempData["CurrentRollNumber"] = rollno;
+            }
+            
             if (rollno!= null && details == null)
             {
                 ModelState.AddModelError("", "Roll number not found");
@@ -313,12 +318,25 @@ namespace StudentElection.Controllers
         //for enroll candidate page
         [HttpPost]
        
-        public ActionResult Enroll(HttpPostedFileBase file)
+        public ActionResult Enroll(HttpPostedFileBase file, FormCollection form)
         {
             string path = Server.MapPath("~/file");
             string fileName = Path.GetFileName(file.FileName);
             string fullapth = Path.Combine(path, fileName);
             file.SaveAs(fullapth);
+            string selectedCat = form["Options"].ToString();
+            using (Student_ElectionEntities db = new Student_ElectionEntities())
+            {
+                Categeory cat = new Categeory();
+                cat.Name = selectedCat;
+                cat.rollno = int.Parse(TempData["CurrentRollNumber"].ToString());
+                db.Categeories.Add(cat);
+                db.SaveChanges();
+
+            }
+            ViewBag.EnrollSucessMessage = "Sucessfully Enrolled";
+           
+
             return View();
         }
         //dropdown list
