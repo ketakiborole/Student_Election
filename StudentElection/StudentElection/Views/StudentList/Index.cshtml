@@ -1,0 +1,29 @@
+﻿@model IEnumerable< StudentElection.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Categeory List</h2>
+
+<ul>
+    @foreach (var student in Model)
+    {
+        <li>@Html.ActionLink(student.studentname, "Details", "Student", new { id = student.rollno })</li>
+
+    }
+</ul>
+<div>
+    @Html.ActionLink("Back to categeory List", "Index", "CategeoryList")
+</div>
+<label for="Date of Birth">
+    Enter the  StartDate:
+    <input type="datetime-local" name="date">
+</label>
+<br />
+<label for="Date of Birth">
+    Enter the EndDate:
+    <input type="datetime-local" name="date">
+</label>
+<br />
+
+<input style="background-color:green; border-color:blue; color:white" type="button" value="launch Election" />

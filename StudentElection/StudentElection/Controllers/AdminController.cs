@@ -311,8 +311,7 @@ namespace StudentElection.Controllers
         //    }
         //}
         //dropdown list
-      
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
