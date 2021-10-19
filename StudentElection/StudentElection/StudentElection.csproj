@@ -260,6 +260,7 @@
     <Content Include="Views\Admin\Enroll.cshtml" />
     <Content Include="Views\CategoryList\Index.cshtml" />
     <Content Include="Views\StudentList\Index.cshtml" />
+    <Content Include="Views\Admin\AnalyseVote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

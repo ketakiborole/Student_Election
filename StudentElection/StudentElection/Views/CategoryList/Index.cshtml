@@ -2,18 +2,39 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<body class="body-content">
 <h2>Categeory List</h2>
 
-<html>
-<body>
-    
-       
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <h4 style="color:white">Online Student Election System</h4>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Register Students", "Upload", "Admin")</li>
+                    <li>@Html.ActionLink("Enroll Candidates", "Enroll", "Admin")</li>
+                    <li>@Html.ActionLink("Launch Election", "Index", "CategoryList")</li>
+                    <li>@Html.ActionLink("Analyse Votes", "AnalyseVote", "Admin")</li>
+                    <li>@Html.ActionLink("LogOut", "LogOut", "Admin")</li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div>
         @foreach (var categeory in Model)
         {
-            <li>@Html.ActionLink(categeory.Name,"Index","StudentList",new {categeoryid=categeory.Id },null)</li>
+            <li>@Html.ActionLink(categeory.Name, "Index", "StudentList", new { categeoryid = categeory.Id }, new { @class = "actionlinkcolor" })</li>
         }
-    
+    </div>
+   
+
 </body>
-</html>
+
 

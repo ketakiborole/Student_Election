@@ -22,7 +22,7 @@ namespace StudentElection.Controllers
     public class AdminController : Controller
     {
         private Student_ElectionEntities db = new Student_ElectionEntities();
-        private IQueryable<Student> artistAlbums;
+        private IQueryable<Student> studentexcel;
         private int CurrentRollNumber;
         // GET: Admin
         public AdminController()
@@ -216,8 +216,8 @@ namespace StudentElection.Controllers
                     DataTable dtable = ds.Tables["ExcelTable"];
                     string sheetName = "Sheet1";
                     var excelFile = new ExcelQueryFactory(pathToExcelFile);
-                    artistAlbums = from a in excelFile.Worksheet<Student>(sheetName) select a;
-                    foreach (var a in artistAlbums)
+                    studentexcel = from a in excelFile.Worksheet<Student>(sheetName) select a;
+                    foreach (var a in studentexcel)
                     {
                         try
                         {
@@ -339,7 +339,33 @@ namespace StudentElection.Controllers
 
             return View();
         }
-        //dropdown list
+       // Analyse vote
+       public ActionResult AnalyseVote()
+        {
+            Student_ElectionEntities db = new Student_ElectionEntities();
+            DateTime datetimenow = DateTime.Now;
+            var election = db.Categeories.Where(x => x.End_Date < datetimenow);
+            return View(election);
+           
+        }
+        //get student by category
+        public ActionResult GetStudentByCategory(string Name)
+        {
+            Student_ElectionEntities db = new Student_ElectionEntities();
+            List<Student> students = new List<Student>();
+            List<Categeory> cat= db.Categeories.Where(c => c.Name == Name).ToList();
+            foreach(var c in cat)
+            {
+                Student stu = db.Students.Find(c.rollno);
+                students.Add(stu);
+            }
+            ViewData["Students"] = students;
+            //Employee employee = entities.Employees.FirstOrDefault(e => e.EmployeeId == id);
+            DateTime datetimenow = DateTime.Now;
+            var election = db.Categeories.Where(x => x.End_Date < datetimenow);
+            
+            return View("AnalyseVote", election);
+        }
         
         protected override void Dispose(bool disposing)
         {
