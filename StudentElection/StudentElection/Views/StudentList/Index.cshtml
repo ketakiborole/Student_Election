@@ -1,29 +1,50 @@
-﻿@model IEnumerable< StudentElection.Models.Student>
+﻿@model IEnumerable<StudentElection.Models.Student>
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Categeory List</h2>
 
-<ul>
-    @foreach (var student in Model)
-    {
-        <li>@Html.ActionLink(student.studentname, "Details", "Student", new { id = student.rollno })</li>
+@if (Model != null)
+{
+    <ul>
+        @foreach (var student in Model)
+        {
+            <li>@Html.ActionLink(student.studentname, "Details", "Student", new { id = student.rollno })</li>
 
-    }
-</ul>
-<div>
-    @Html.ActionLink("Back to categeory List", "Index", "CategeoryList")
-</div>
-<label for="Date of Birth">
-    Enter the  StartDate:
-    <input type="datetime-local" name="date">
-</label>
-<br />
-<label for="Date of Birth">
-    Enter the EndDate:
-    <input type="datetime-local" name="date">
-</label>
-<br />
+        }
+    </ul>
+}
 
-<input style="background-color:green; border-color:blue; color:white" type="button" value="launch Election" />
+
+
+
+@*<label for="Date of Birth">
+        Enter the  StartDate:
+        <input type="datetime-local" name="date" value="startdate">
+    </label>
+    <br />
+    <label for="Date of Birth">
+        Enter the EndDate:
+        <input type="datetime-local" name="date" value="enddate">
+    </label>
+    <br />*@
+
+
+
+
+@using (Html.BeginForm("Index", "StudentList", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="Date of Birth">
+        Enter the  StartDate:
+        <input type="datetime-local" name="startdate">
+    </label>
+    <br />
+    <label for="Date of Birth">
+        Enter the EndDate:
+        <input type="datetime-local" name="enddate">
+    </label>
+
+    <input type="submit" value="Launch Election" class="btn btn-primary" />
+
+}

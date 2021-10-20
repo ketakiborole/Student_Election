@@ -1,0 +1,44 @@
+﻿@model StudentElection.Models.Categeory
+@{
+    ViewBag.Title = " ";
+}
+<!DOCTYPE html>
+<html>
+<body style=" background-color: #4DC8CD;">
+    <center>
+        <hr />
+        <table border="1">
+            <tr>
+                <th>Select</th>
+                <th>CategeoryID</th>
+                <th>Name</th>
+                <th>Start_Date</th>
+                <th>End_Date</th>
+            </tr>
+            @foreach (var catitem in ViewBag.catdetails)
+            {
+                <tr>
+                    <td><input type="checkbox" value="@catitem.Id" /></td>
+                    <td>@catitem.Id</td>
+                    <td>@catitem.Name</td>
+                    <td>@catitem.Start_Date</td>
+                    <td>@catitem.End_Date</td>
+                </tr>
+            }
+        </table>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.3/jquery.min.js"></script>
+        <script>
+            $("input[type=checkbox]").on('change', function () {
+                if ($(this).prop('checked')) {
+                    $(this).parent().parent().css('background.color', 'blue');
+                    $(this).parent.parent().css('color', 'white');
+                }
+                else {
+                    $(this).parent().parent().css('background', '');
+                    $(this).parent().parent().css('color', '');
+                }
+            });
+        </script>
+    </center>
+</body>
+</html>

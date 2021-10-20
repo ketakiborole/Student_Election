@@ -19,8 +19,8 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Register Students", "Upload", "Admin")</li>
                     <li>@Html.ActionLink("Enroll Candidates", "Enroll", "Admin")</li>
-                    <li>@Html.ActionLink("Launch Election", "Student", "Home")</li>
-                    <li>@Html.ActionLink("Analyse Votes", "Student", "Home")</li>
+                    <li>@Html.ActionLink("Launch Election", "Index", "CategoryList")</li>
+                    <li>@Html.ActionLink("Analyse Votes", "AnalyseVote", "Admin")</li>
                     <li>@Html.ActionLink("LogOut", "LogOut", "Admin")</li>
                 </ul>
             </div>
@@ -93,8 +93,9 @@
                     <br />
                     @Html.TextBox("file", "", new { type = "file" }) <br />
 
-                    <input type="submit" value="Enroll" class="btn btn-primary" />
-        }
+                    <input type="submit" value="Enroll" class="btn btn-primary" name="submit" />
+                    <input type="submit" value="Reset" class="btn btn-primary" name="submit" />
+                }
             </div>
         </div>
     }

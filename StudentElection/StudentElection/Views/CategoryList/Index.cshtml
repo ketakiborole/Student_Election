@@ -30,7 +30,7 @@
     <div>
         @foreach (var categeory in Model)
         {
-            <li>@Html.ActionLink(categeory.Name, "Index", "StudentList", new { categeoryid = categeory.Id }, new { @class = "actionlinkcolor" })</li>
+            <li>@Html.ActionLink(categeory.Name, "Index", "StudentList", new { categeoryid = categeory.Id }, null)</li>
         }
     </div>
    

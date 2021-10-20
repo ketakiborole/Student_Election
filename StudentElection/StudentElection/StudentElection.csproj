@@ -159,6 +159,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CategeoryDifferenceController.cs" />
     <Compile Include="Controllers\CategoryListController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -261,6 +262,7 @@
     <Content Include="Views\CategoryList\Index.cshtml" />
     <Content Include="Views\StudentList\Index.cshtml" />
     <Content Include="Views\Admin\AnalyseVote.cshtml" />
+    <Content Include="Views\CategeoryDifference\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

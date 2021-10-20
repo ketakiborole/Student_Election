@@ -320,23 +320,37 @@ namespace StudentElection.Controllers
        
         public ActionResult Enroll(HttpPostedFileBase file, FormCollection form)
         {
-            string path = Server.MapPath("~/file");
-            string fileName = Path.GetFileName(file.FileName);
-            string fullapth = Path.Combine(path, fileName);
-            file.SaveAs(fullapth);
-            string selectedCat = form["Options"].ToString();
-            using (Student_ElectionEntities db = new Student_ElectionEntities())
+            if(form["submit"].ToString()== "Enroll")
             {
-                Categeory cat = new Categeory();
-                cat.Name = selectedCat;
-                cat.rollno = int.Parse(TempData["CurrentRollNumber"].ToString());
-                db.Categeories.Add(cat);
-                db.SaveChanges();
+                string path = Server.MapPath("~/file");
+                string fileName = Path.GetFileName(file.FileName);
+                string fullapth = Path.Combine(path, fileName);
+                file.SaveAs(fullapth);
+                string selectedCat = form["Options"].ToString();
+                using (Student_ElectionEntities db = new Student_ElectionEntities())
+                {
+                    Categeory cat = new Categeory();
+                    cat.Name = selectedCat;
+                    cat.rollno = int.Parse(TempData["CurrentRollNumber"].ToString());
+                    db.Categeories.Add(cat);
+                    db.SaveChanges();
+
+                }
+                ViewBag.EnrollSucessMessage = "Sucessfully Enrolled";
+
 
             }
-            ViewBag.EnrollSucessMessage = "Sucessfully Enrolled";
-           
+            else
+            {
+                ViewBag.EnrollSucessMessage = "";
+            }
 
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Result()
+        {
+            ViewBag.EnrollSucessMessage = "";
             return View();
         }
        // Analyse vote
@@ -345,7 +359,9 @@ namespace StudentElection.Controllers
             Student_ElectionEntities db = new Student_ElectionEntities();
             DateTime datetimenow = DateTime.Now;
             var election = db.Categeories.Where(x => x.End_Date < datetimenow);
-            return View(election);
+           var unique_category= election.GroupBy(e => e.Name).Select(e => e.FirstOrDefault()).ToList();
+
+            return View(unique_category);
            
         }
         //get student by category
@@ -363,8 +379,8 @@ namespace StudentElection.Controllers
             //Employee employee = entities.Employees.FirstOrDefault(e => e.EmployeeId == id);
             DateTime datetimenow = DateTime.Now;
             var election = db.Categeories.Where(x => x.End_Date < datetimenow);
-            
-            return View("AnalyseVote", election);
+            var unique_category = election.GroupBy(e => e.Name).Select(e => e.FirstOrDefault()).ToList();
+            return View("AnalyseVote", unique_category);
         }
         
         protected override void Dispose(bool disposing)
